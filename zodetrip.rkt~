@@ -1,8 +1,10 @@
 #lang racket/gui
 
 (require racket/runtime-path
+         (prefix-in sdl2: sdl2/pretty)
+         (prefix-in mix: sdl2/mixer/pretty)
          2htdp/universe 2htdp/image
-         "data.rkt" "rooms.rkt" "stubs.rkt")
+         "data.rkt" "rooms.rkt")
 
 (define APP '((name "Zodetrip")
               (nickname "zodetrip")
@@ -107,7 +109,7 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
 
   (printf "mon: ~a~n" x) x)
 
-(define (sh) "( --) Halt music."  (stub-halt-music)) ; Stop the music after crash...
+(define (sh) "( --) Halt music."  (mix:halt-music)) ; Stop the music after crash...
 
 
 ;; Vector Math
@@ -237,7 +239,7 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
   "( name --) Play sound if possible. But don't crash."
 
   (let [(sound (av SOUNDS name))]
-    (when sound (stub-play-channel -1 sound 0))))
+    (when sound (mix:play-channel -1 sound 0))))
 
 
 
@@ -385,7 +387,7 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
          ]
 
     (qroom name
-           (stub-load-mus (av MUSICS (pqv room 'theme 'music)))
+           (mix:load-mus (av MUSICS (pqv room 'theme 'music)))
            (list rw rh)
            (list ox oy)
            tiles
@@ -532,10 +534,10 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
                   'qroom
                   (let [(q (prepare-qroom ROOMS (or name 'default)))]
                     (when (qroom-music q)
-                      (stub-clear-error!)
-                      (stub-fade-out-music 500) ; This is blocking! Grrr...
-                      (unless (stub-play-music (qroom-music q) -1)
-                        (eprintf "Can't play music: ~a~n" (stub-get-error)))
+                      (mix:clear-error!)
+                      (mix:fade-out-music 500) ; This is blocking! Grrr...
+                      (unless (mix:play-music (qroom-music q) -1)
+                        (eprintf "Can't play music: ~a~n" (mix:get-error)))
                       )
                     q))
               'hero-pos pos)
@@ -556,7 +558,7 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
     (case (first action)
       [(end)   (sv w 'script #f)]
       [(sfx)   (let [(s (av SOUNDS (second action)))]
-                 (when s (stub-play-channel -1 s 0))
+                 (when s (mix:play-channel -1 s 0))
                  (next w))]
       [(theme) (next w)] ; Nop for now.
       [(tell)  (next (sv w 'message (append '(#f) (rest action))))] ; Narrator sez.
@@ -627,21 +629,21 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
 ;                                              
 ;                                              
 
-(define sdlm-ready (stub-set-main-ready!))
-(stub-sdl2-init! '(audio))
-(define sdlm-formats (stub-init! '(ogg mp3)))
-(stub-clear-error!)
-(unless (eq? 0 (stub-open-audio! 22050 stub-default-format stub-default-channels 512)) ; Recommended defaults.
-  (println (format "Error: Can't open audio: ~a" (stub-get-error))))
+(define sdlm-ready (sdl2:set-main-ready!))
+(sdl2:init! '(audio))
+(define sdlm-formats (mix:init! '(ogg mp3)))
+(mix:clear-error!)
+(unless (eq? 0 (mix:open-audio! 22050 mix:default-format mix:default-channels 512)) ; Recommended defaults.
+  (println (format "Error: Can't open audio: ~a" (mix:get-error))))
 
 ;; Moved this down here so audio device will be open to load.
 (define SOUNDS
   (for/list [(k '(snare clank door step step-soft step-stone
                        portal-fail portal key-fail key unlock))
              (v PSOUNDS)]
-    (list k (stub-load-wav v))))
-(when (not (equal? "" (stub-get-error)))
-  (eprintf "Error loading sounds: ~a~n" (stub-get-error)))
+    (list k (mix:load-wav v))))
+(when (not (equal? "" (mix:get-error)))
+  (eprintf "Error loading sounds: ~a~n" (mix:get-error)))
 
 (define final
   (big-bang '((ticks 0)
@@ -656,5 +658,5 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
     ;; (state #t) ; State monitor. Comment out if you don't need it.
     ))
 
-(stub-halt-music)
-(stub-close-audio!)
+(mix:halt-music)
+(mix:close-audio!)
