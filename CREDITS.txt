@@ -1,0 +1,33 @@
+Credits for Zode-Trip
+jrlf 2021-04-25
+
+
+Original Music: Bruno Marques
+Available for work at https://www.instagram.com/obrunomarques/
+
+Some of the loops used on the Theme and Hometown are from:
+Rafael de Paula - @rdepaulacm (Cavaquinho)
+Diogo Carneiro - @diogocarneirop (Acoustic Guitar)
+
+
+Original Sound Effects: Jasmine Jardim
+Available for work at https://www.instagram.com/audio.jardim/
+
+
+Game: Jos'h Fuller
+
+
+Original Windows Build Script: Andrew Kravchuk
+Profile: https://github.com/lockie
+
+Development Environment: Dr. Racket
+Home page: https://racket-lang.org/
+
+Level Layouts done with: LDtk
+Home page: https://ldtk.io/
+
+Sprites and Tiles painted with: Graphics Gale
+Home page: https://graphicsgale.com/us/
+
+
+See LICENSE.txt for licensing details. All music/SFX is CC BY 4.0.

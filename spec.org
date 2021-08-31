@@ -1,0 +1,401 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:nil arch:headline
+#+OPTIONS: author:t broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:nil todo:t |:t
+#+TITLE: Zodetrip (wt) Specification
+#+DATE: <2021-04-18 Sun>
+#+AUTHOR:
+#+EMAIL: USER@BOLLUX
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 26.3 (Org mode 9.1.9)
+
+
+* About
+* Story
+It's 2081 and the world is (mostly) in our heads.
+
+Every place has a touchstone, a marker, a monument which makes it
+distinct and special from any other place. The touchstone is the
+anchor to the augmented realities built around it. The electronic
+world is built and connected with these.
+
+But the touchstones are disappearing. And when your touchstone is
+gone, there is no anchor -- reality slides and shifts as the augments
+no longer match the real. The world becomes a dangerous place.
+
+Pele lives in a neighbourhood clustered around the Chorar ("to cry")
+touchstone. It's a statue of a woman with a tear running down her
+face, inscribed as "Nossa Senhora da Piedade" ("Our Lady of
+Sorrows"). The node local intelligence was built into the statue at
+some point. Everybody calls the Touchstone "Senhora" because of the
+statue. The local intelligence speaks with a younger woman's voice.
+
+One morning, as he walks by Senhora, he notices a glowing red mark on
+her forehead. When he questions her about it, she tells him she doesn't
+know what it is. Furthermore:
+
+"I have attempted to contact Node Repair Authority and have not been
+able to reach them. This is retry 14972..."
+
+For a touchstone to be out of contact with anything is unheard
+of. Pele goes through his neighbourhood asking if the people have
+noticed the problem. Most haven't. Those that have are unconcerned --
+they can still do their work, or get their shows or talk to the people
+they want to at other touchstones. They tell him that "the nodes never
+go down" and "someone will come from Central to see about it."
+
+However, as he asks around more, Pele discovers that nobody knows what
+or where "Central" is, or how to get in touch with them (or
+it). Senhora doesn't know either -- she just routes her requests to
+her nearest neighbour nodes and they're supposed to pass it on.
+
+Pele decides he's going to find Central and put in the repair request
+personally. He asks Senhora about the best way to go about it
+(everybody asks Senhora everything, after all) and she suggests
+travelling to the nearest neighbour node and progressing from there.
+
+She gives him a map -- which will fill in as he visits each node -- and a
+compact splinter of her consciousness, which she calls "Mana", which
+takes the form of a ball with cartoon wings.
+
+Senhora tells Pele he needs to get his Mother's permission first, so
+he has to find her (she's at the hydroponics vats) and explain the
+situation. When she understands that Senhora is sending a
+representative with him and that it's a potential emergency, she nods
+and says that it's time Pele learned about the wider world. She can't
+leave because she has work to do, but she will trust him in Mana's
+care (she phrases it as he must take care of Mana).
+
+His Mother gives him her stonekey, which will let him travel from
+touchstone to touchstone. Then kisses him and sends him on his way,
+with an admonishment to return by supper.
+
+* Locations
+The world is divided into 48 hexagonal "Zodes" (Zone Nodes). Each Zode
+is administered by a Touchstone, which is a monument, usually
+decorated or disguised in a manner congruent with the area it
+controls. It anchors the reality of the Zone so that things are
+consistent fore the people living there. 
+
+A person can travel to other Zodes if they have a Stonekey to present
+to the Touchstone. In the world of the game, the Zodes are losing
+contact with each other because they are being damaged or falling into
+disuse.
+
+For the purpose of this game jam, I will count myself lucky if I can
+get these four locations working.
+
+** Home Village (start, hometown)
+   Small Brazilian country village with odd technical looking bits
+   (strange machines, circuit looking stuff, etc.) here and
+   there. This is Pele's home town and Zode. 
+*** Rooms
+    * Square
+      Main area, game starts here. Surrounded by low walls. Shrine in
+      centre, with buildings scattered around. Fruit stand near shrine.
+    * Shrine (Touchstone house)
+      This is where the Llorar touchstone that manages the Zode is
+      kept. It's a modern looking statue of a sorrowful
+      girl. Electronic equipment in the background.
+    * Home
+      Pele's house. Main room with table and chairs,
+      kitchenette. Pele's bedroom off from that.
+    * Workshop
+      Large open space with benches and tools lying around.
+    * Hydroponics
+      Clean space with plants in neat rows.
+*** Characters
+    * Pele
+    * Tia
+    * Tita
+    * Jorge (Mechanic)
+    * Tia Esposita
+    * Tio Felipe
+    * Tia Cecelia (Shopkeeper)
+    * Artur (kid)
+    * Beatriz (kid)
+    * Mama
+*** Tasks
+    * Fetch tool for Mechanic.
+    * Find missing birdcage.
+    * Call to action by Tia
+    * Find Mom to get Stonekey.
+** Steamland
+   "Steampunk" style city -- large pipes and gears integrated into
+   architecture. Zepplins flying around. Improbable horseless carriages. 
+*** Rooms
+    * Grand Promenade
+    * Clockwork Shop
+    * Airship Hangar
+    * Disused Kiosk (Touchstone house)
+    * PM's House
+*** Characters
+    * Sir Clockham
+*** Tasks
+    * Need to get key to access Touchstone house.
+** Meso
+   Mysterious jungle with twining vines covering ancient
+   statues. Small Aztec pyramid enclosing Touchstone
+   shrine. Touchstone is not working correctly. 
+*** Rooms
+    * Plaza de Meyor (Square)
+    * Pyramid (Touchstone house)
+    * Burial Preparation Room
+    * Docks
+    * Garden
+*** Characters
+    * Fish Priest
+*** Tasks
+** Kyber
+   Hopelessly engorged cityscape. Lots of electronic integration
+   everywhere with occasional short circuits. Hard edges and straight
+   lines. Touchstone can't be found.
+*** Rooms
+    * Commons
+    * Mall
+    * Junk Mart
+    * ModernBody
+    * Shard Lobby
+    * Shard Top floor (where Touchstone is).
+*** Characters
+    * Viki Venturi
+*** Tasks
+    * Have to find out where the Touchstone is.
+
+* Interface
+* Engine
+** Scripting Triggers
+*** Room Enter
+*** Traps
+*** Mobs
+** Scripting Lexicon
+   * end ( --)
+     End current script.
+   * sfx ( effect-name --) 
+     Play sound effect.
+   * theme ( music-name --)
+     Play musical theme.
+   * tell ( message --)
+     Bare messagebox (narrator).
+   * say ( message who --)
+     Character delivers the message.
+   * move ( (x y) left|right --)
+     Move hero to designated location, facing direction.
+   * jump ( room-name (x y) left|right --)
+     Jump to named room, set character to (x, y) position, facing direction.
+   * set! ( parm --) ( parm value --)
+     Set named parameter. If no value specified, sets to #t.
+   * is? ( parm ... --)
+     If named parameter is #t, executes statements following in form,
+     then exits.
+
+* Assets
+** Sprites
+** Backgrounds
+** Audio
+   These are sound files/clips/tracks that will be played at
+   appropriate moments during the game. 
+
+   Because of the rules of the Lisp Games Jam
+   (https://itch.io/jam/spring-lisp-game-jam-2021), they should be
+   under a CC BY, CC BY-SA, CC BY-NC license
+   (https://creativecommons.org/licenses/). Contributors will be
+   credited in the CREDITS.txt file and in-game (if I get in-game
+   credits working in time). Credits can include contact information.
+
+   Of these, the ones most needed are the title and location music.
+
+*** Music  
+    - Note taken on [2021-04-22 Thu 12:38] \\
+      Hi! @obrunomarques#5910, here are my notes:
+      * MESO -- I have nothing further to say except how much I like this one!
+      * HOMETOWN -- Although we don't want to call toooo much attention to it, this one is a bit too relaxed for me. Could you increase the tempo a bit and make it a bit "harder"? Maybe some of what you hear in this clip around three seconds in: https://www.youtube.com/watch?v=4_58J87bAW4. Also, if you have an opportunity (and appropriate samples or whatever), feel free to "flavour" it a bit with stuff like the reco-reco de bambu about 28 seconds in: https://www.youtube.com/watch?v=kmhk0DVhQ74 (they also have some nice rhythms further in if that's useful).
+      * STEAM -- I like the heavy "clock-chime" chords, but the discordance makes it a bit too menacing. Could you tone that down a bit? Also maybe add some ticking, clicking, repetitive machine style noise to help sell the clockwork kind of mood you've got going on with the chimes.
+      * KYBER -- This one feels a bit "haunted house-y" to me. I would like it to have a kind of fast, rushing undercurrent, like you're in a big city and people are rushing all around you. The %uno_arp_loop_001.ogg clip gives me some of that feeling and I love the arpegiations (sp?).
+    There are several types of music -- title, location BGM and
+    leitmotif. 
+
+    The title/credits are used to introduce the game and close it out
+    after the player has won. The location BackGround Music sets the
+    stage for a particular "world" (or "Zode" in game parlance) and
+    should convey the feel of the location without calling too much
+    attention to itself. 
+
+    The leitmotif is a short musical sketch of the character. They
+    might be played when the character is first introduced, or about to
+    do something. Those are low priority, since I don't know if I will
+    get to where I can use them.
+
+    The "length" column indicates optimal length for the track and if
+    there's an "X" in the "loop" column, it would be nice if the track
+    looped (I can loop it if needed).
+
+    | name         | description                                            | length | loop |
+    |--------------+--------------------------------------------------------+--------+------|
+    | Title        | Adventurous and eager, the first step of the journey.  |   5-10 |      |
+    | Credits      | Low key credit music, maybe echo title theme? Low pri. |     5+ | X    |
+    |--------------+--------------------------------------------------------+--------+------|
+    | Hometown     | SA/Brazilian flavoured, maybe some samba?              |    20+ | X    |
+    | Steamland    | Brass gears, harpsichord and ratcheting escapements.   |    20+ | X    |
+    | Meso         | Aztec pipes, stone drums, subdued chanting.            |    20+ | X    |
+    | Kyber        | Hatsune Miku, playing the saw in a boiler factory.     |    20+ | X    |
+    |--------------+--------------------------------------------------------+--------+------|
+    | Pele         | The young boy sets out!                                |     5+ |      |
+    | Tia          | Haunting digital pipes with melancholy.                |     5+ |      |
+    | Tita         | Brash, tinny and buzzing.                              |     3+ |      |
+    | Sir Clockham | Fussy and victorian                                    |     3+ |      |
+    | Fish Priest  | Brooding mystery, guarded wisdom.                      |     3+ |      |
+    | Viki Venturi | A scream in black leather, a spike to the throat.      |     3+ |      |
+
+*** SFX   
+    These are sounds which indicate something-is-happening,
+    particularly something magical, like portals opening or something.
+
+    | name          | description                                               | length |
+    |---------------+-----------------------------------------------------------+--------|
+    | portal-open   | Chiming, ethereal digital sound.                          |     2+ |
+    | portal-fail   | Similar to portal-open, but "whump-whump" fail at end.    |      3 |
+    | stonekey      | Short chiming digital activation sound.                   |     1+ |
+    | stonekey-fail | Chime starts, then "clunk" of failure.                    |      1 |
+    | tita-fly      | Tinny, jingly digital musicbox for when Tita flies around |     4+ |
+    | tita-angry    | Buzzy error bleep.                                        |        |
+    | tita-ok       | Pleasant tinny two tone chime.                            |        |
+    | unlock        | Sting when a key or part of one is found.                 |        |
+
+*** Foley   
+    Sounds made by objects interacting with the environment.
+   
+    | name           | description                                   | length |
+    |----------------+-----------------------------------------------+--------|
+    | door-open      | Heavy residential door opening.               |        |
+    | door-close     | Heavy residential door closing.               |        |
+    | door-slam      | Heavy residential door slamming.              |        |
+    | footstep       | Footstep on ground.                           |        |
+    | footstep-stone | Footstep on concrete/stone.                   |        |
+    | footstep-soft  | Footstep on carpet/leaves.                    |        |
+    | windup         | Spring/ratchet winding, like on a clock.      |        |
+    | clank          | Heavy clanking noise, from a large mechanism. |     5+ |
+
+*** Ambient
+    These sounds are used in conjunction with the BGM to set the stage
+    for a particular Zode. Not sure I'm going to get to these, so low
+    priority. They would be cool, though.
+
+    | name     | description                             | length | frequency |
+    |----------+-----------------------------------------+--------+-----------|
+    | glitch-1 | Electronic, fuzzy, glitchy noise.       |        |           |
+    | glitch-2 | "                                       |        |           |
+    | glitch-3 | "                                       |        |           |
+    | glitch-4 | "                                       |        |           |
+    | glitch-5 | "                                       |        |           |
+    | steam-1  | Steam whistle in distance.              |        |           |
+    | steam-2  | Escaping steam.                         |        |           |
+    | steam-3  | Clashing gears.                         |        |           |
+    | steam-4  | Railroad crossing.                      |        |           |
+    | steam-5  | Car horn/klaxon.`                       |        |           |
+    | jungle-1 | Birdsong.                               |        |       30% |
+    | jungle-2 | Birdsong.                               |        |       20% |
+    | jungle-3 | Birdsong.                               |        |       15% |
+    | jungle-4 | Long clicking noise, like a kookaburra. |        |        5% |
+    | jungle-5 | Yip, yip cry.                           |        |        2% |
+    | cyber-1  | Outgassing chemicals.                   |        |           |
+    | cyber-2  | Electric hum.                           |        |           |
+    | cyber-3  | Electric arc.                           |        |           |
+    | cyber-4  | Gunshot.                                |        |           |
+    | cyber-5  | Machine gun.                            |        |           |
+
+   
+* Todos
+** TODO [6/8] Navigation
+   - [X] Pele faces correct direction horizontally.
+   - [X] Only walks on floors.
+   - [X] Disallow off-map excursions.
+   - [X] Generate hit event.
+   - [X] Traps.
+   - [X] "Blind" Traps -- triggered on off-floor scenery hit.
+   - [ ] Mob interaction.
+   - [ ] Speech balloon if he bumps into something like a wall?
+** TODO [5/11] Scripting
+   - [X] Script execution.
+   - [X] Get traps working.
+   - [X] Debug to show trap locations.
+   - [X] Room enter event.
+   - [X] Messages.
+   - [ ] Message handle character portraits.
+   - [ ] Sound triggers.
+   - [ ] Mob init events.
+   - [ ] Mob perframe events -- why not!?
+   - [ ] Mob self-hide.
+   - [ ] Timed Messages.
+** TODO [/] Assets
+   - [ ] Character portraits for say.
+** TODO [3/20] Rooms
+   - [X] Title
+   - [X] Hometown: Square
+   - [X] Hometown: Home
+   - [ ] Hometown: Industrial (Garage)
+   - [ ] Hometown: Services (Store & Greenhouse)
+   - [ ] Hometown: Garage
+   - [ ] Hometown: Shrine
+   - [ ] Hometown: Store
+   - [ ] Hometown: Greenhouse
+   - [ ] Steamland: Square
+   - [ ] Steamland: Aerodrome
+   - [ ] Steamland: Hangar
+   - [ ] Steamland: Shrine?
+   - [ ] Meso: Plazo Meyor
+   - [ ] Meso: Temple of Sun
+   - [ ] Meso: Shrine
+   - [ ] Kyber: Commons
+   - [ ] Kyber: Shrine
+   - [ ] Kyber: Shard
+   - [ ] Kyber: Lab
+
+* Schedule
+
+  | date | goal                              | done                                                     |
+  |------+-----------------------------------+----------------------------------------------------------|
+  |   16 | N/A                               |                                                          |
+  |   17 | Spec                              | Painting of Pele.                                        |
+  |   18 | Spec, simple test with sound.     | Got simple program working, but not compiling yet.       |
+  |   19 | Test movement, map, compile.      |                                                          |
+  |      | Get feedback from users.          |                                                          |
+  |   20 | Wire in events & actions.         | Build script. Got SDL sound working!                     |
+  |      |                                   | Sprite direction changes.                                |
+  | [21] | Start laying out scenario.        |                                                          |
+  |      | Write up music brief.             |                                                          |
+  | [22] | Set up game page.                 | Did first level artwork, spec revisions,                 |
+  |      | Mobs, artwork.                    | Using LDtk, new tilemapping, new music.                  |
+  | [23] | Music, save/load, audio menu.     | Sort of did save (world state dump). Got map display     |
+  |      |                                   | working. Redid first level and streamlined process. SFX. |
+  |   24 | Tune story.                       |                                                          |
+  |   25 | Test. Fixes. Deliver! Tools down! |                                                          |
+
+* Credits
+** Hexagonal world map
+   https://dmswart.com/2018/11/27/a-mathematically-impossible-hexagonally-tiled-world-map/
+
+** ZX81 Font - https://www.dafont.com/zx81.font
+   Free for personal use.
+
+* Code
+** Converting ldtk files to room tile layouts
+   #+begin_src elisp
+(let ((n 0))
+  (dolist (i '((192 0) (193 1) (193 2) (225 3) (246 4) (246 5) (246 6) (226 7) (193 8) (193 9) (225 10) (242 12) (208 16) (197 28) (197 29) (197 30) (197 31) (208 32) (245 39) (212 44) (215 45) (214 46) (215 47) (208 48) (217 50) (218 51) (219 52) (228 60) (231 61) (230 62) (231 63) (208 64) (245 65) (233 66) (234 67) (235 68) (245 69) (208 79) (208 80) (245 89) (196 91) (196 92) (196 93) (196 94) (196 95) (208 96) (245 106) (228 107) (229 108) (230 109) (229 110) (232 111) (208 112) (242 113) (242 126) (208 127) (224 128) (193 129) (193 130) (193 131) (193 132) (193 133) (193 134) (193 135) (225 136) (226 138) (193 139) (193 140) (193 141) (193 142) (227 143)))
+    (while (< n (cadr i))
+      (insert "-1 ")
+      (insert (if (= 0 (mod (+ n 1) 16)) "\n" ""))
+      (setq n (+ n 1)))
+    (insert (format "%s " (car i)))
+    (insert (if (= 0 (mod (+ n 1) 16)) "\n" ""))
+    (setq n (+ n 1))
+    ))
+   #+end_src
+
+* Build
+
+c:/Program\ Files/Racket/raco.exe exe --gui --embed-dlls -vv -o build/zodetrip.exe zodetrip.rkt 
