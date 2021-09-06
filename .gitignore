@@ -1,4 +1,7 @@
 *~
 _*
-.DS_Store*
+.DS_Store
 node_modules/*
+*.dep
+*.zo
+compiled/drracket/errortrace/av_rkt.zo

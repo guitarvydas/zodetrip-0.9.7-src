@@ -18,9 +18,9 @@
 
 (define (stub-play-music x y) #f)
 
-(define (stub-open-audio! w x y z) #f)
+(define (stub-open-audio! w x y z) 0)
 
-(define (stub-get-error) #f)
+(define (stub-get-error) "")
 
 (define (stub-set-main-ready!) #f)
 

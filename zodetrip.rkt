@@ -2,7 +2,9 @@
 
 (require racket/runtime-path
          2htdp/universe 2htdp/image
-         "data.rkt" "rooms.rkt" "stubs.rkt")
+         "data.rkt" "rooms.rkt" "stubs.rkt" "vector.rkt"
+         "qroom.rkt" "sv.rkt" "av.rkt" "move.rkt" "sound.rkt"
+         "keying.rkt")
 
 (define APP '((name "Zodetrip")
               (nickname "zodetrip")
@@ -38,40 +40,12 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
 (define HEIGHT (* TILE-Y 9))
 (define VIEW (make-object bitmap% WIDTH HEIGHT))
 
-(struct qroom ; "Quick" room. Acceleration structure for drawing and movement.
-  (name
-   music
-   size       ; Map size in tiles.
-   origin     ; Map draw origin in pixels (for mobs).
-   tiles      ; Tile layout.
-   bg         ; bg is bitmap layer.
-   floor      ; Places that can be walked on.
-   traps      ; Do things if locations are stepped on.
-   mobs))     ; Anything not a static tile, particularly with a script.
 
 
 (define-runtime-path-list PPICS
   '("i/sprites-02-4b.png"
     "i/map-01.png"))
-(define-runtime-path-list PMUSICS
-  '("a/title.ogg"
-    "a/home.ogg"
-    "a/hometown-003.ogg"))
-(define MUSICS (for/list [(k '(title home hometown))
-                          (v PMUSICS)] (list k v)))
-(define-runtime-path-list PSOUNDS
-  '("a/drum-samples/snare.wav"
-    "a/sfx_foley_clank_3.oga"
-    "a/sfx_foley_door_close.oga"
-    "a/sfx_foley_footstep_normal_3.oga"
-    "a/sfx_foley_footstep_soft_1.oga"
-    "a/sfx_foley_footstep_stone_1.oga"
-    "a/sfx_magical_effects_portal_fail.oga"
-    "a/sfx_magical_effects_portal_open.oga"
-    "a/sfx_magical_effects_stone_key_fail.oga"
-    "a/sfx_magical_effects_stone_key.oga"
-    "a/sfx_magical_effects_unlock.oga"
-    ))
+
 
 (define PICS (for/list
                  ([s '(sprites zodemap)]
@@ -110,51 +84,10 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
 (define (sh) "( --) Halt music."  (stub-halt-music)) ; Stop the music after crash...
 
 
-;; Vector Math
-(define (v+v a b)
-  "( a b -- c) Add two vectors together."
-
-  (list (+ (first a) (first b)) (+ (second a) (second b))))
-
-(define (v*s v s)
-  "( v s -- v') Multiply vector v times scalar s."
-
-  (list (* (first v) s) (* (second v) s)))
-
-(define (vroll a vmax)
-  "( a vmax -- a') Roll a around if outside of ((0 0) vmax)."
-
-  (list (modulo (first a) (first vmax)) (modulo (second a) (second vmax))))
-
-(define (vlimit a vmax)
-  "( a vmax -- a') Limit a to range ((0 0) vmax)."
-
-  (list (cond [(> 0 (first a)) 0] [(<= (first vmax) (first a)) (first vmax)] [else (first a)])
-        (cond [(> 0 (second a)) 0] [(<= (second vmax) (second a)) (second  vmax)] [else (second a)])))
 
 
-;; Association Lists
-(define (av data key)
-  "( data key -- value) Get value from association list."
 
-  (when (not (list? data))
-    (writeln (format "Bad list, requested: ~a" key)))
-  (let ([found (assoc key data)])
-    (if found (last found) #f)))
 
-(define (ar data key)
-  "( data key -- rest) Get rest of values from association list."
-
-  (let ([found (assoc key data)])
-    (if found (rest found) #f)))
-
-;; Could this be faster?
-(define (sv data key value)
-  "( data key value -- data') Set or create key with value."
-
-  (if (assoc key data)
-      (map (λ (x) (if (equal? key (first x))  (list key value)  x)) data)
-      (cons (list key value) data)))
 
 
 ;; Prolog -- Sorta'
@@ -232,13 +165,6 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
     ;; TODO Need to draw face if specified... 
     ))
 
-;; Sound
-(define (play-safe name)
-  "( name --) Play sound if possible. But don't crash."
-
-  (let [(sound (av SOUNDS name))]
-    (when sound (stub-play-channel -1 sound 0))))
-
 
 
 (define SPRITES (for/list [(s SPRITE-DEF)] (apply sp s)))
@@ -265,83 +191,6 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
 ;                                                                                          
 ;                                                                                          
 ;                                                                                          
-
-(define (hero-face w dx)
-  "( w dx dy -- w) What direction should hero face?"
-
-  (sv w 'hero-face (cond [(< dx 0) 'left]
-                         [(> dx 0) 'right]
-                         [else (or (av w 'hero-face) 'right)])))
-
-(define (try-move w p)
-  "( w p -- w) Try to move hero to position p."
-
-  ;; (printf "-- try-move w ~a~n" p) ; Debug.
-  (let* [(px (first p))  (py (second p))
-         (qr (av w 'qroom))                
-         (size (qroom-size qr))]
-    (if (or (> 0 px) (< (- (first size) 1) px)
-            (> 0 py) (< (- (second size) 1) py)
-            (not (list-ref (qroom-floor qr) (+ (* (first size) py) px))))
-        w
-        (begin
-          (play-safe 'step) ; Side effect!!!
-          (sv w 'hero-pos p)))))
-
-(define (hero-move w dx dy)
-  "( w dx dy -- w) Move (or don't) hero. Checks floor (later mobs too)."
-
-  (if (and (eq? 0 dx) (eq? 0 dy)) w ; If we haven't moved, go on.
-      (let* [(d (v+v (av w 'hero-pos) (list dx dy)))]
-        (sv (try-move (hero-face w dx) d)
-            'event (list 'hit d)))))
-
-  
-(define (world-move w dx dy)
-  "( w dx dy -- w) Move appropriate world object by delta."
-
-  (if (av w 'message) w
-    (cond [(av w 'map)
-           (sv w 'map-hex-c
-               (modulo (+ (or (av w 'map-hex-c) 0) dy) (length MAP-ZODES)))]
-          [(av w 'dbg-tile)
-           (sv w 'dbg-tile-p
-               (vroll (v+v (or (av w 'dbg-tile-p) (av w 'hero-pos)) (list dx dy))
-                      (qroom-size (av w 'qroom))))]
-          [else (hero-move w dx dy)])))
-  
-(define (world-scroll w dx)
-  "( w dx -- w) Apply scroll wheel movements."
-
-  (if (av w 'map)
-    (sv w 'map-hex-r (+ dx (or (av w 'map-hex-r) 41)))
-    w))
-
-(define (keying w k)
-  "( w k -- w) Process key events."
-
-  (case k
-    [(" " "\r") (sv w 'message #f)]
-    
-    [("m") (sv w 'map (not (av w 'map)))]
-
-    [("f8")  (writeln w) w]                           ; Write out current state.
-    [("f9")  (sv w 'dbg-trap (not (av w 'dbg-trap)))] ; Show traps.
-    [("f10") (sv w 'dbg-tile (not (av w 'dbg-tile)))] ; Tile identification mode.
-    [("f11") (sv w 'grid (not (av w 'grid)))]         ; Display tile grid overlay.
-    [("f12") (sv w 'debug (not (av w 'debug)))]       ; Display current state.
-
-    [("right") (world-move w 1 0)]
-    [("left")  (world-move w -1 0)]
-    [("up")    (world-move w 0 -1)]
-    [("down")  (world-move w 0 1)]
-
-    [("wheel-up") (world-scroll w 1)]
-    [("wheel-down") (world-scroll w -1)]
-
-    [else w]
-    )
-  )
 
 
 (define (draw-bg b room)
@@ -635,11 +484,7 @@ along with Zodetrip.  If not, see <https://www.gnu.org/licenses/>.
   (println (format "Error: Can't open audio: ~a" (stub-get-error))))
 
 ;; Moved this down here so audio device will be open to load.
-(define SOUNDS
-  (for/list [(k '(snare clank door step step-soft step-stone
-                       portal-fail portal key-fail key unlock))
-             (v PSOUNDS)]
-    (list k (stub-load-wav v))))
+
 (when (not (equal? "" (stub-get-error)))
   (eprintf "Error loading sounds: ~a~n" (stub-get-error)))
 
