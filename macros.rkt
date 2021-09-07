@@ -1,0 +1,47 @@
+#lang racket
+(define-syntax-rule (swap x y)
+  (let ([tmp x])
+    (set! x y)
+    (set! y tmp)))
+(define a 1)
+(define b 2)
+(set! a 3)
+(set! b 4)
+;; (swap a b)
+(let ([a 5]
+      [b 6])
+  (println a)
+  (println b)
+  (swap a b)
+  (println a)
+  (println b))
+(let ([tmp 7]
+      [x 8])
+  (println tmp)
+  (println x)
+  (swap tmp x)
+  (println tmp)
+  (println x))
+(let ([tmp 9]
+      [a 10])
+  (println "naive expansion")
+  (println tmp)
+  (println a)
+  ;; (swap tmp a) --> x=tmp, y=a
+    (let ([tmp tmp]) 
+    (set! tmp a)
+    (set! tmp tmp)    
+    (println tmp)
+    (println a)))
+(let ([tmp 11]
+      [a 12])
+  (println "hygenic expansion")
+  (println tmp)
+  (println a)
+  ;; (swap tmp a) --> x1=tmp, y1=a
+  (let ([tmp1 tmp])
+    (set! tmp a)
+    (set! a tmp1)    
+    (println tmp)
+    (println a)))
+        
