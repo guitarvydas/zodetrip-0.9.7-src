@@ -6,7 +6,8 @@
   "( w k -- w) Process key events."
 
   (case k
-    [(" " "\r") (sv w 'message #f)]
+    [(" ") (sv w 'message #f)]
+    [("\r") (println "enter") (sv w 'message #f)]
     
     [("m") (sv w 'map (not (av w 'map)))]
 
