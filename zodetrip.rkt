@@ -4,7 +4,8 @@
          2htdp/universe 2htdp/image
          "data.rkt" "rooms.rkt" "stubs.rkt" "vector.rkt"
          "qroom.rkt" "sv.rkt" "av.rkt" "move.rkt" "sound.rkt"
-         "keying.rkt")
+         "keying.rkt"
+         macro-debugger/stepper)
 
 (define APP '((name "Zodetrip")
               (nickname "zodetrip")

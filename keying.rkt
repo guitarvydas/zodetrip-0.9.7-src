@@ -1,6 +1,7 @@
 #lang racket/gui
 (provide keying)
-(require "sv.rkt" "av.rkt" "move.rkt")
+(require "sv.rkt" "av.rkt" "move.rkt"
+         macro-debugger/stepper)
 
 #|
 (define (original-keying w k)
@@ -31,18 +32,63 @@
   )
 |#
 
-(define (keying w k)
+(define (raw-keying w k)
   "( w k -- w) Process key events."
 
   (case k
-    [("\r") (println "pt") (sv w 'message #f)]
+    [("\r") (println "raw") (sv w 'message #f)]
     
-    [("right") (world-move w 1 0)]
-    [("left")  (world-move w -1 0)]
-    [("up")    (world-move w 0 -1)]
-    [("down")  (world-move w 0 1)]
+    [("right") (println "raw right") (world-move w 1 0)]
+    [("left")  (println "raw left") (world-move w -1 0)]
+    [("up")    (println "raw up") (world-move w 0 -1)]
+    [("down")  (println "raw down") (world-move w 0 1)]
 
 
-    [else w]
+    [else (println "raw else") w]
     )
   )
+
+;;;;;;;;;
+
+;; see https://stackoverflow.com/questions/32793972/racket-switch-statement-macro
+
+(require (for-syntax syntax/parse))
+
+(define-syntax (on-key stx)
+  (define (transform-clause cl)
+    (syntax-case cl (default)
+      ((default expr) #'(else expr))
+      ((val sexpr ...) #'((val) sexpr ...))))
+
+  (define (transform-clauses cls)
+    (syntax-case cls ()
+      ((cl)
+       (with-syntax ((case-clause (transform-clause #'cl)))
+         #'(case-clause)))
+      ((cl rest ...)
+       (with-syntax ((case-clause (transform-clause #'cl))
+                     ((case-rest ...) (transform-clauses #'(rest ...))))
+         #'(case-clause case-rest ...)))))
+
+  (syntax-case stx ()
+    ((_ k clause ...)
+     (with-syntax (((case-clause ...) (transform-clauses #'(clause ...))))
+       #'(case k case-clause ...)))))
+;;;;;;;;;
+
+(define (macro-1-keying w k)
+  (on-key k
+    ["\r" (println "macro-1a-enter") (sv w 'message #f)]
+    
+    ["right" (println "macro-1a-right") (world-move w 1 0)]
+    ["left"  (println "macro-1 left") (world-move w -1 0)]
+    ["up"    (println "macro-1 up") (world-move w 0 -1)]
+    ["down"  (println "macro-1 down") (world-move w 0 1)]
+
+
+    [else (println "macro-1 else") w]
+    )
+  )
+
+(define (keying w k)
+  (macro-1-keying w k))
