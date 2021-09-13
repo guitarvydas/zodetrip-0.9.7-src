@@ -1,7 +1,9 @@
 #lang racket/gui
 (provide keying)
 (require "sv.rkt" "av.rkt" "move.rkt"
-         macro-debugger/stepper)
+         macro-debugger/stepper
+;         "peg-keying.rkt"
+)
 
 #|
 (define (original-keying w k)
@@ -194,6 +196,11 @@
                           )))
 
 ;;;;;;;;;
+
+;;;;;;;;; test 4 - using PEG + macro
+(require "peg-keying.rkt")
+;;;;;;;;;;
+
 (define (keying w k)
   ;(macro-1-keying w k))
   ;(macro-2-keying w k))
