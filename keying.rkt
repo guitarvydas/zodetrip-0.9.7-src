@@ -91,16 +91,24 @@
     )
   )
 
+(define (test1)
+  (expand-once '(on-key-1 k ["right" a b])))
+
 ;;;;;;;;; macro v2
 
 (define-syntax (on-key-2 stx)
   (define (transform-clause cl)
-    (syntax-case cl (default)
-      ((default expr) #'(else expr))
-      ((val sexpr ...) #'((val) sexpr ...))))
+    (syntax-case cl (default enter right left up down)
+      ((default expr ...) #'(else expr ...))
+      ((enter expr ...) #'(("\r") expr ...))
+      ((right expr ...) #'(("right") expr ...))
+      ((left expr ...) #'(("left") expr ...))
+      ((up expr ...) #'(("up") expr ...))
+      ((down expr ...) #'(("down") expr ...))
+      ((val expr ...) #'((val) expr ...))))
 
   (define (transform-clauses cls)
-    (syntax-case cls ()
+    (syntax-case cls (enter)
       ((cl)
        (with-syntax ((case-clause (transform-clause #'cl)))
          #'(case-clause)))
@@ -116,17 +124,24 @@
 
 (define (macro-2-keying w k)
   (on-key-2 k
-    ["\r" (println "macro-2-enter") (sv w 'message #f)]
+    [enter (println "macro-2-enter") (sv w 'message #f)]
     
-    ["right" (println "macro-2-right") (world-move w 1 0)]
-    ["left"  (println "macro-2 left") (world-move w -1 0)]
-    ["up"    (println "macro-2 up") (world-move w 0 -1)]
-    ["down"  (println "macro-2 down") (world-move w 0 1)]
+    [right (println "macro-2-right") (world-move w 1 0)]
+    [left  (println "macro-2 left") (world-move w -1 0)]
+    [up    (println "macro-2 up") (world-move w 0 -1)]
+    [down  (println "macro-2 down") (world-move w 0 1)]
 
 
     [else (println "macro-2 else") w]
     )
   )
+
+(define (test2)
+  (expand-once '(on-key-2 k
+                          [enter a b]
+                          [down c d]
+                          )))
+
 ;;;;;;;;;
 
 (define (keying w k)
