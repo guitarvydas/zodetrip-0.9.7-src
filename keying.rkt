@@ -2,12 +2,13 @@
 (provide keying)
 (require "sv.rkt" "av.rkt" "move.rkt")
 
-(define (keying w k)
+#|
+(define (original-keying w k)
   "( w k -- w) Process key events."
 
   (case k
     [(" ") (sv w 'message #f)]
-    [("\r") (println "enter") (sv w 'message #f)]
+    [("\r") (println (sv w 'message #f)]
     
     [("m") (sv w 'map (not (av w 'map)))]
 
@@ -24,6 +25,23 @@
 
     [("wheel-up") (world-scroll w 1)]
     [("wheel-down") (world-scroll w -1)]
+
+    [else w]
+    )
+  )
+|#
+
+(define (keying w k)
+  "( w k -- w) Process key events."
+
+  (case k
+    [("\r") (println "pt") (sv w 'message #f)]
+    
+    [("right") (world-move w 1 0)]
+    [("left")  (world-move w -1 0)]
+    [("up")    (world-move w 0 -1)]
+    [("down")  (world-move w 0 1)]
+
 
     [else w]
     )
