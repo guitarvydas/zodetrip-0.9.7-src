@@ -76,7 +76,20 @@
     ((_ k clause ...)
      (with-syntax (((case-clause ...) (transform-clauses #'(clause ...))))
        #'(case k case-clause ...)))))
-;;;;;;;;;
+
+(define (macro-1-keying w k)
+  (on-key-2 k
+    ["\r" (println "macro-1-enter") (sv w 'message #f)]
+    
+    ["right" (println "macro-1 right") (world-move w 1 0)]
+    ["left"  (println "macro-1 left") (world-move w -1 0)]
+    ["up"    (println "macro-1 up") (world-move w 0 -1)]
+    ["down"  (println "macro-1 down") (world-move w 0 1)]
+
+
+    [else (println "macro-2 else") w]
+    )
+  )
 
 ;;;;;;;;; macro v2
 
@@ -100,7 +113,6 @@
     ((_ k clause ...)
      (with-syntax (((case-clause ...) (transform-clauses #'(clause ...))))
        #'(case k case-clause ...)))))
-;;;;;;;;;
 
 (define (macro-2-keying w k)
   (on-key-2 k
@@ -115,6 +127,8 @@
     [else (println "macro-2 else") w]
     )
   )
+;;;;;;;;;
 
 (define (keying w k)
+  ;(macro-1-keying w k))
   (macro-2-keying w k))
