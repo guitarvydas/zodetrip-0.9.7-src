@@ -204,4 +204,5 @@
 (define (keying w k)
   ;(macro-1-keying w k))
   ;(macro-2-keying w k))
-  (macro-3-keying w k))
+  ;(macro-3-keying w k))
+  (peg-keying-1 w k))
