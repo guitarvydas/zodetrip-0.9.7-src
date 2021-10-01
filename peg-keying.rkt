@@ -30,11 +30,11 @@ gestureKeystroke <- gEnter / gLeft / gRight / gUp / gDown;
 gesture <- _ gkey:gestureKeystroke _ ':' _ exp:s-exp _ -> (list (list gkey) exp);
 gestures <- g:gesture+ -> g;
 xkeymap <- gs:gestures -> #'(lambda (w k) (println "k") (println k) (cons 'case (cons 'k (append gs '((else w))))));
-keymap <- gs:gestures -> (let ((e (list 'lambda '(w k) '(println "hello")))
-                               (e2 (lambda () (println "goodbye"))))
+keymap <- gs:gestures -> (let ((e (lambda (w k) (println "hello")))
+                               (e2 (lambda () (println gs))))
                            (println e)
                            (println e2)
-                           (let ((p2 (eval e2)))
+                           (let ((p2 (e2)))
                              (println p2)
                              (let ((p (eval e)))
                                (println p)
